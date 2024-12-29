@@ -40,16 +40,16 @@ class Solution:
         for i in range(len(s)):
             countS[s[i]] = 1+countS.get(s[i],0)
             countT[t[i]] = 1+countT.get(t[i],0)
-            return countS==countT
+        return countS==countT
 
-        return False
+
     def time_eval(self):
         return self.end_time-self.start_time
 
 
 eval1 = Solution();
-s = "fegkozhrffricowugavodggkauwztogkseiicdbqrtpoosrunnzqxlmlxgizjsxlufbwbrzgupvndhbxhjzyqhvpogqirsufczcpvlyymqwmdhuplayxywkowmoebguinusqybwyiwlrsnixzdymxkpluzbyislnamxecppvbjljrcvtbbwvwyfmngmwtbxvshibaskufbfxinppgyrmxuminakwfixuajhvpflhcpnklyedgeutoqadxbjszphgvbxkubsghfthhbdviayfkklhxvlaqtgsmbljofngmllxhqkauarqgryotqbdlgktiwr"
-t = "gacbkqzqfnymerbxqgqhmhdrorakuhzclqikrrtxxaeypuxzlxwkmkbclsllppndooujxdlblmfygggfpbdphogkvqtbjtrodyawxolwwqnexxdfjleikwfaxmjitnbylumqqaudwpxvttirqeslmpvnjisrsrcbjyvkjcoprpbmpnhr"
+s = "baa"
+t = "aba"
 
 out1 = eval1.isAnagramBasic(s,t)
 print("AnagramBasicOutput ",out1)
@@ -64,6 +64,6 @@ print("Time Taken ",eval2.time_eval())
 
 
 eval3 = Solution()
-out3 = eval3.isAnagramSorted(s,t)
-print("SortedAnagramOutput ",out3)
+out3 = eval3.isAnagramHash(s,t)
+print("HashAnagram ",out3)
 print("Time Taken ",eval3.time_eval())
