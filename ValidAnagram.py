@@ -41,6 +41,15 @@ class Solution:
             countS[s[i]] = 1+countS.get(s[i],0)
             countT[t[i]] = 1+countT.get(t[i],0)
         return countS==countT
+    #using Hashtables second method
+    def is_anagram_hash_2(self,s:str,t:str) -> bool:
+        if(len(s)!=len(t)):return False
+        countS = [0]*26
+        countT = [0]*26
+        for i,c in enumerate(s):
+            countS[ord(s[i])-ord('a')] += 1
+            countS[ord(c[i])-ord('a')] += 1
+        return countS==countT
 
 
     def time_eval(self):
@@ -49,7 +58,7 @@ class Solution:
 
 eval1 = Solution();
 s = "baa"
-t = "aba"
+t = "abaa"
 
 out1 = eval1.isAnagramBasic(s,t)
 print("AnagramBasicOutput ",out1)
@@ -67,3 +76,8 @@ eval3 = Solution()
 out3 = eval3.isAnagramHash(s,t)
 print("HashAnagram ",out3)
 print("Time Taken ",eval3.time_eval())
+
+eval4 = Solution()
+out4 = eval4.isAnagramHash(s,t)
+print("HashAnagram ",out4)
+print("Time Taken ",eval4.time_eval())
