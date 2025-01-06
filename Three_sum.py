@@ -1,8 +1,10 @@
+from collections import defaultdict
 from typing import List
 
 nums = [-1,0,1,2,-1,-4]
 
 class Solution:
+    # my solution
     def twoIntegerSum(self,nums: List[int],val:int)->List[List]:
         res = []
         for index, num in enumerate(nums):
@@ -24,7 +26,6 @@ class Solution:
         res = []
         for index,num  in enumerate(nums):
             two_sum_array  = nums[index+1:]
-            print("Original Array",num,two_sum_array)
             two_sum = self.twoIntegerSum(two_sum_array,num)
             print("found array",num,two_sum)
             if (len(two_sum)>0):
@@ -33,7 +34,20 @@ class Solution:
                     if(sorted(triple_sum) not in res):
                         res.append(sorted([num,*x]))
         return res
+    # hashmap
+    def threesum_hashmap(self,nums: List[int])->List[List]:
+        count = defaultdict(int)
+        nums.sort()
+        for num in nums:
+            count[num]+=1
+        print(count)
+        res = []
+        return res
+    # three sum three pointer
 
 eval = Solution()
 out1 = eval.threeSum(nums)
 print(out1)
+
+out2 = eval.threesum_hashmap(nums)
+print(out2)
