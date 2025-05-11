@@ -85,30 +85,97 @@ print(out1)
             # print("temp ->",i,":",dp)
 
             if(i in dp):
+                print("dp->",i,"->",dp[i])
                 return dp[i]
             if (s[i]=="0"):
                 return 0
+            print("s[",i,"]->",s[i])
             res = dfs(i+1)
             if(i+1<len(s)) and(s[i]=="1" or (s[i]=="2" and s[i+1] in "0123456")):
+                print("Here->",s[i],",",s[i+1])
                 res += dfs(i+2)
             dp[i] = res
+            print("temp ->",i,":",dp)
             return res
 
         return dfs(0)
-  n = "12345"
+  n = "12345234"
   eval = Solution();
   out1 = eval.numDecodings(n)
   print("Result",out1)
 #+END_SRC
 
 #+RESULTS:
-: Result 3
+#+begin_example
+s[ 0 ]-> 1
+s[ 1 ]-> 2
+s[ 2 ]-> 3
+s[ 3 ]-> 4
+s[ 4 ]-> 5
+s[ 5 ]-> 2
+s[ 6 ]-> 3
+s[ 7 ]-> 4
+dp-> 8 -> 1
+temp -> 7 : {8: 1, 7: 1}
+temp -> 6 : {8: 1, 7: 1, 6: 1}
+Here-> 2 , 3
+dp-> 7 -> 1
+temp -> 5 : {8: 1, 7: 1, 6: 1, 5: 2}
+temp -> 4 : {8: 1, 7: 1, 6: 1, 5: 2, 4: 2}
+temp -> 3 : {8: 1, 7: 1, 6: 1, 5: 2, 4: 2, 3: 2}
+temp -> 2 : {8: 1, 7: 1, 6: 1, 5: 2, 4: 2, 3: 2, 2: 2}
+Here-> 2 , 3
+dp-> 3 -> 2
+temp -> 1 : {8: 1, 7: 1, 6: 1, 5: 2, 4: 2, 3: 2, 2: 2, 1: 4}
+Here-> 1 , 2
+dp-> 2 -> 2
+temp -> 0 : {8: 1, 7: 1, 6: 1, 5: 2, 4: 2, 3: 2, 2: 2, 1: 4, 0: 6}
+Result 6
+#+end_example
 *** Problem Complexity:
 - Time Complexity: O(n) as it will pass through the list once and uses
   the calculation done in previous steps.
 - Space Complexity: O(n) as it will store the key value for all the
   indexes of the string+1.
 *** Key TakeWay / Learning:
+:PROPERTIES:
+:ID:       07CB5570-FBDC-48A8-8C42-A8153C599B2D
+:END:
 - Dynamic Programming
 - Memoization
 - Recursion
+** Approach 3: Dynamic Programming (Bottom Up Approach):
+- This is a variant of dynamic programming a bit different from the
+  above implementation from the second approach.
+- Here it starts from the last entry and get to the first char.
+#+BEGIN_SRC python :results output :exports both
+  class Solution:
+      def numDecodings(self, s: str) -> int:
+          dp = {len(s):1}
+
+          for i in range(len(s)-1, -1, -1):
+
+              if(s[i]=='0'):
+                  dp[i]= 0
+              else:
+                  dp[i] = dp[i+1]
+              if((i+1)<len(s) and (s[i] == '1' or
+              (s[i]=='2' and s[i+1] in '0123456'))):
+                  dp[i] += dp[i+2]
+          return dp[0]
+
+  n='1222'
+  eval = Solution()
+  out1 = eval.numDecodings(n)
+  print(out1)
+#+END_SRC
+
+#+RESULTS:
+: 5
+
+*** Problem Complexity:
+- Time : O(n)
+- Space: O(n)
+*** Key Takeway:
+- Dynamic Programming
+- Bottom Up Approach
