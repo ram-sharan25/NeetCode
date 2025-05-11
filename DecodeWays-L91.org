@@ -4,10 +4,11 @@
 :Created: <2025-05-10>
 :END:
 
-* [DecodeWays-L91] - LeetCode [Problem Number]
-  - Link: [Problem Link Here]
+* [DecodeWays-L91]
+  - Link: [https://neetcode.io/problems/decode-ways]
   - Difficulty: [Medium]
   - Date: <2025-05-10>
+  - Solution:https://youtu.be/6aEyTjOwlJU
 
 ** Approach & Code
 
@@ -34,7 +35,7 @@ class Solution:
                 return 1
             if s[0] =='0':
                 return 0
-            res = dfs(i+1)
+            res = dfs(i+1
             if(i<len(s)-1):
                 if(s[i]=='1' or s[i]=='2' and s[i+1]<'7'):
                     res+=dfs(i+2)
@@ -52,10 +53,64 @@ print(out1)
 : 3
 
 **** Problem Complexity:
-- **Time Complexity**: O(2^n) as it branches out on every character and
+- Time Complexity: O(2^n) as it branches out on every character and
   it can have 2 branches on every char. And it needs to create 2^n
   branches and run over all the combination to complete the problem
-- **Space Complexity**: O(n)
+- Space Complexity: O(n)
 **** Key Takeaway / Learning:
 - Recursion
 - Tree Approach (need to develop more intuition)
+
+*** Approach 2: Dynamic Approach:
+- This is using the Dynamic Programming Approach
+- This creates a memory to save the already calcualted value so that
+  recalculation is avoided .
+  - This is done by keeping a dictionalry named dp.
+- First the value of dp is initialized by the len(s) value which is
+  not a normal case as len(s) char doesnot exits in the string.
+- Then in the tree (dfs) it will look for the value for i in dp, if it
+  is already present then no need to calculate it.
+- Then if it is not present then check for if it is 0, as it is the
+  invalid case .
+- If both the conditions passes then it will look for case with single
+  digit.
+- Also after checking for the double digit and its contraints(no first
+  char to be 0 and no second char to be grater than 6), it calculates
+  for 2 digits too.
+- And all the results are accumulated in res variable.
+- The program starts from 0^th digit.
+#+BEGIN_SRC python :results output :exports both
+  class Solution:
+      def numDecodings(self, s: str) -> int:
+        dp = {len(s):1}
+        def dfs(i):
+            # print("temp ->",i,":",dp)
+
+            if(i in dp):
+                return dp[i]
+            if (s[i]=="0"):
+                return 0
+            res = dfs(i+1)
+            if(i+1<len(s)) and(s[i]=="1" or (s[i]=="2" and s[i+1] in "0123456")):
+                res += dfs(i+2)
+            dp[i] = res
+            return res
+
+        return dfs(0)
+  n = "12345"
+  eval = Solution();
+  out1 = eval.numDecodings(n)
+  print("Result",out1)
+#+END_SRC
+
+#+RESULTS:
+: Result 3
+**** Problem Complexity:
+- Time Complexity: O(n) as it will pass through the list once and uses
+  the calculation done in previous steps.
+- Space Complexity: O(n) as it will store the key value for all the
+  indexes of the string+1.
+**** Key TakeWay / Learning:
+- Dynamic Programming
+- Memoization
+- Recursion
