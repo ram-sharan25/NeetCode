@@ -4,15 +4,13 @@
 :Created: <2025-05-10>
 :END:
 
-* [DecodeWays-L91]
+* Information
   - Link: [https://neetcode.io/problems/decode-ways]
   - Difficulty: [Medium]
   - Date: <2025-05-10>
   - Solution:https://youtu.be/6aEyTjOwlJU
-
-** Approach & Code
-
-*** Approach 1: Recursive Brute Force using tree
+* Approach & Code
+** Approach 1: Recursive Brute Force using tree
 - This approach is a recursive brute force approach which is based on the tree
   based on the tree based approach.
 - For every character it can either behave as single or two digits
@@ -52,16 +50,16 @@ print(out1)
 #+RESULTS:
 : 3
 
-**** Problem Complexity:
+*** Problem Complexity:
 - Time Complexity: O(2^n) as it branches out on every character and
   it can have 2 branches on every char. And it needs to create 2^n
   branches and run over all the combination to complete the problem
 - Space Complexity: O(n)
-**** Key Takeaway / Learning:
+*** Key Takeaway / Learning:
 - Recursion
 - Tree Approach (need to develop more intuition)
 
-*** Approach 2: Dynamic Approach:
+** Approach 2: Dynamic Approach:
 - This is using the Dynamic Programming Approach
 - This creates a memory to save the already calcualted value so that
   recalculation is avoided .
@@ -105,12 +103,12 @@ print(out1)
 
 #+RESULTS:
 : Result 3
-**** Problem Complexity:
+*** Problem Complexity:
 - Time Complexity: O(n) as it will pass through the list once and uses
   the calculation done in previous steps.
 - Space Complexity: O(n) as it will store the key value for all the
   indexes of the string+1.
-**** Key TakeWay / Learning:
+*** Key TakeWay / Learning:
 - Dynamic Programming
 - Memoization
 - Recursion
