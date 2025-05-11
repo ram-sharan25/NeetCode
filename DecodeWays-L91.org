@@ -1,0 +1,61 @@
+#+TITLE: DecodeWays-L91
+:PROPERTIES:
+:Title: DecodeWays-L91
+:Created: <2025-05-10>
+:END:
+
+* [DecodeWays-L91] - LeetCode [Problem Number]
+  - Link: [Problem Link Here]
+  - Difficulty: [Medium]
+  - Date: <2025-05-10>
+
+** Approach & Code
+
+*** Approach 1: Recursive Brute Force using tree
+- This approach is a recursive brute force approach which is based on the tree
+  based on the tree based approach.
+- For every character it can either behave as single or two digits
+  within some contraints.
+- Also this is a recursive approach where each it process the whole of
+  string by taking each char once in combination of one or two digits.
+- The two char combination is checked for constraints of :
+  - no 0 as its first character .
+  - 1 place character should be less than 7 if the 0^th character
+    is 2. ( This is to check characters from 1 to 26)
+- If the no of character is only one then it has reached to the end of
+  the string with taking each characters under consideration.
+  - So one, 1 is returned for that branch of tree.
+  - So for each complete branch only one is added.
+#+BEGIN_SRC python :results output :exports both
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        def dfs(i):
+            if i==len(s):
+                return 1
+            if s[0] =='0':
+                return 0
+            res = dfs(i+1)
+            if(i<len(s)-1):
+                if(s[i]=='1' or s[i]=='2' and s[i+1]<'7'):
+                    res+=dfs(i+2)
+            return res
+        return dfs(0)
+
+n = "12345"
+
+eval = Solution()
+out1 = eval.numDecodings(n)
+print(out1)
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+**** Problem Complexity:
+- **Time Complexity**: O(2^n) as it branches out on every character and
+  it can have 2 branches on every char. And it needs to create 2^n
+  branches and run over all the combination to complete the problem
+- **Space Complexity**: O(n)
+**** Key Takeaway / Learning:
+- Recursion
+- Tree Approach (need to develop more intuition)
