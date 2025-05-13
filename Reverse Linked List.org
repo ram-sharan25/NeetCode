@@ -1,0 +1,107 @@
+#+TITLE: Reverse Linked List
+:PROPERTIES:
+:Title: Reverse Linked List
+:Created: <2025-05-12>
+:END:
+
+* Information
+  - Name: [Reverse Linked List]
+  - Link: [https://neetcode.io/problems/reverse-a-linked-list]
+  - Difficulty: [Easy]
+  - Date: <2025-05-12>
+  - Tags: Linked List
+
+* Approach & Code
+
+** Approach 1
+
+- Swap the place of each node so that 1st element becomes the last
+  element and 2nd becomes the second last.
+- In this problem first need to create a linked list then only solve
+  the problem.
+- Defining linked list is pretty simple.
+#+BEGIN_SRC python :results output :exports both
+ class ListNode:
+      def __init__(self, val=0, next=None):
+          self.val = val
+          self.next = next
+#+END_SRC
+
+#+RESULTS:
+- The code above defines the basic structure of a linked list with val
+  and next as its two properties.
+- Similarly creating a linked list from list is iterating over the
+  list and linking each next nodes address with the current node.
+#+BEGIN_SRC python :results output :exports both
+ def create_linked_list(values):
+      aNode = ListNode()
+      temp = aNode
+      for val in values:
+          temp.next = ListNode(val)
+          temp = temp.next
+      return aNode.next
+
+#+END_SRC
+
+#+RESULTS:
+- Now we can iterate through the linked list by jumping from one node
+  to the next and until we encounter the last node that is the None.
+- To solve this problem of reverse linked list we can use the two
+  pointer method where we use two variables to iterate over the linked
+  list and every time we assign the current node to the previous one's
+  address.
+- current = prev
+#+BEGIN_SRC python :results output :exports both
+  # Definition for singly-linked list.
+  from typing import Optional
+  class ListNode:
+      def __init__(self, val=0, next=None):
+          self.val = val
+          self.next = next
+
+  class Solution:
+      def reverseList(self, head:Optional[ListNode]) -> Optional[ListNode]:
+         prev,curr = None,head
+         while curr:
+             temp = curr.next
+             curr.next = prev
+             prev = curr
+             curr = temp
+         return prev
+  # function to create linked List
+  def create_linked_list(values):
+      aNode = ListNode()
+      temp = aNode
+      for val in values:
+          temp.next = ListNode(val)
+          temp = temp.next
+      return aNode.next
+
+  # function to convert linked list back to list
+  def back_to_list(values):
+      temp = []
+      while(values is not None):
+          temp.append(values.val)
+          values = values.next
+      return temp
+
+  # experiments
+  n = [0,1,2,3]
+  x = create_linked_list(n)
+  eval = Solution()
+  out1 = eval.reverseList(x)
+  res = back_to_list(out1)
+  print(res)
+#+END_SRC
+
+#+RESULTS:
+: [3, 2, 1, 0]
+
+*** Problem Complexity
+   - Time Complexity: O(n)
+   - Space Complexity: O(1)
+
+*** Key Takeaway / Learning
+- Creating Linked List
+- Iterating over linked List
+- Reversing Linked List
