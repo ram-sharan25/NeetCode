@@ -177,5 +177,8 @@ Result 6
 - Time : O(n)
 - Space: O(n)
 *** Key Takeway:
+:PROPERTIES:
+:ID:       96D8A623-0756-4B0D-9DC8-9669155D4480
+:END:
 - Dynamic Programming
 - Bottom Up Approach
