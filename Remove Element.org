@@ -1,0 +1,48 @@
+#+TITLE: Remove Element
+:PROPERTIES:
+:Title: Remove Element
+:Created: <2025-06-25>
+:END:
+
+* Information
+  - Name: [Remove Element]
+  - Link: [https://leetcode.com/problems/remove-element/]
+  - Difficulty: [Easy]
+  - Date: <2025-06-25>
+  - Problem Type: Array
+
+* Approach & Code
+
+** Approach 1
+
+- There is an array of numbers ~nums~ and a value named ~val~ remove
+  all the occurrances of the ~val~ from the ~nums~ and keep only the
+  numbers that are not equal to ~val~.
+- Change the array nums such that the first k elements of nums contain
+  the elements which are not equal to val.
+- The remaining elements of nums are not important as well as the size
+  of nums.
+- Return k.
+
+#+BEGIN_SRC python :results output :exports both
+  class Solution(object):
+      def removeElement(self, nums, val):
+          count1 = nums.count(val)
+          for i in range(count1):
+              nums.remove(val)
+          return len(nums)
+
+    nums = [3,2,2,3]
+    val = 3
+    out = solution()
+    res = out.removeElement(nums,val)
+    print(res)
+#+END_SRC
+
+#+RESULTS:
+
+*** Problem Complexity
+   - Time Complexity: O(n)
+   - Space Complexity: O(1)
+
+*** Key Takeaway / Learning
