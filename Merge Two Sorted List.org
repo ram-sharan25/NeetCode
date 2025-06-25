@@ -1,0 +1,59 @@
+#+TITLE: Merge Two Sorted List
+:PROPERTIES:
+:Title: Merge Two Sorted List
+:Created: <2025-05-13>
+:END:
+
+* Information
+  - Name: [Merge Two Sorted List]
+  - Link: [https://neetcode.io/problems/merge-two-sorted-linked-lists]
+  - Difficulty: [Easy]
+  - Date: <2025-05-13>
+
+  - Problem Type:
+* Approach & Code
+
+** Approach 1
+
+-
+
+#+BEGIN_SRC python :results output :exports both
+  from typing import Optional
+  class ListNode:
+      def __init__(self, val=0, next=None):
+          self.val = val
+          self.next = next
+
+
+  class Solution:
+     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+         print(list1,list2)
+
+
+  def create_linked_list(values):
+        aNode = ListNode()
+        temp = aNode
+        for val in values:
+            temp.next = ListNode(val)
+            temp = temp.next
+        return aNode.next
+
+
+   list1 = [1,2,4];
+   list2 = [1,3,5];
+   eval = Solution()
+
+   node1 = create_linked_list(list1)
+   node2 = create_linked_list(list2)
+   out1 = eval.mergeTwoLists(list1,list2)
+   print(out1)
+
+#+END_SRC
+
+#+RESULTS:
+
+*** Problem Complexity
+   - Time Complexity: O(...)
+   - Space Complexity: O(...)
+
+*** Key Takeaway / Learning
