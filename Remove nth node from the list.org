@@ -1,0 +1,78 @@
+#+TITLE: Remove nth node from the list
+:PROPERTIES:
+:Title: Remove nth node from the list
+:Created: <2025-07-01>
+:END:
+
+* Information
+  - Name: [Remove nth node from the list]
+  - Link: [https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/]
+  - Difficulty: [Medium]
+  - Date: <2025-07-01>
+  - Problem Type: Linked List
+
+* Approach & Code
+
+** Approach 1
+
+- Given the head of the node remove the nth node from the list.
+- Solution Approach:
+  - Pass through the linked list to find the total number of elements
+    in the list.
+    - Store the count value .
+  - Copy till the element that is just before the element to be
+    removed.
+    - This means that if n is the position of element from the last
+      element then we copy till the ~total_count-n-1~.
+  - Skip the nth element by just assigning the value to the next
+    element after nth element.
+    - The trick here is ~node.next = node.next.next~.
+    - This is assigning the next element for the element before nth to
+      be element after nth by ~node.next.next~
+  - As linked list are mutable, which means that copying and changing
+    the copy changes the original one too.
+  - So though we changed the current and returned the original one the
+    output will have the nth node removed.
+
+#+BEGIN_SRC python :results output :exports both
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        elements = 0
+        current = head
+        while current is not None:
+            elements +=1
+            current = current.next
+        print(elements,n)
+        if elements == n :
+            return head.next
+        current = head
+        for _ in range(elements-n-1):
+            current = current.next
+        if current.next:
+            current.next = current.next.next
+        return head
+#+END_SRC
+
+#+RESULTS:
+
+*** Problem Complexity
+   - Time Complexity: O(2n) = O(n) but here we loop over the same
+     linked list twice.
+     - It can be made better by using the two pointer method.
+   - Space Complexity: O(1)
+     - As for linked list the space required is one at the time of
+       processing.
+
+*** Key Takeaway / Learning
+- Linked List are mutable:
+  - Changing the copy of the linked list will also change the original
+    linked list.
+  - We can get to the next element by ~node.next.next~ which is
+    proving a element after the next element.
+    - if there are 1->2->3 then we can get to 3 from 1 with just
+      ~1.next.next~ .
