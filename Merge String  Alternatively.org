@@ -1,0 +1,109 @@
+#+TITLE: Merge String  Alternatively
+:PROPERTIES:
+:Title: Merge String  Alternatively
+:Created: <2025-07-02>
+:END:
+
+* Information
+  - Name: [Merge String  Alternatively]
+  - Link: [https://leetcode.com/problems/merge-strings-alternately/description/?envType=study-plan-v2&envId=leetcode-75]
+  - Difficulty: [Easy]
+  - Date: <2025-07-02>
+  - Problem Type:
+
+* Approach & Code
+
+** Approach 1: Single Pointer Solution
+- Move from the 0th index to the last character of the string.
+- You are given two words ~w1~ and ~w2~ , merge two words such that
+  first letter is of the first string and second is of the second and
+  that goes alternatively till one of the word finishes.
+- If there is some letter remaining for a word but another is already
+  finished then just append the remaninig part at the end of the
+  combined resultant word.
+
+- Approach:
+  - Compare two words to find the smallest and the largest among those two
+  - Iterate till the smallest word is completed.
+    - Concatenate each characters of each word alternately
+  - After that from the next value at which the loop ends just append the
+    remaining value of longest string in the result
+
+#+BEGIN_SRC python :results output :exports both
+  class Solution(object):
+    def mergeAlternately(self, word1, word2):
+       result =''
+       longest_word = word2
+       smallest_word = word1
+       if len(word1)>len(word2):
+           longest_word = word1
+           smallest_word = word2
+       for i in range(len(smallest_word)):
+           result += word1[i]+word2[i]
+       result += longest_word[i+1:]
+       return result
+
+
+  word1 = 'dedeabc'
+  word2 = 'pqr'
+  out = Solution()
+  res = out.mergeAlternately(word1,word2)
+  print(res)
+#+END_SRC
+
+#+RESULTS:
+: dpeqdreabc
+
+
+*** Problem Complexity
+   - Time Complexity: O(n)
+     - This will take O(n) time as the loop is to run till the length of the
+       shortest string.
+
+   - Space Complexity: O(1)
+     - We donot use more than the constant space.
+*** Key Takeaway / Learning
+- Pretty easy solution
+** Approach 2 : Single pointer
+- Move from one direction only -> from the 0th index
+- This can also be done just by iterating over the maximum of the two words and
+  if the current index is less than the length of each word then just add to the
+  result .
+- The word1 is to be first and then the second word followed by it .
+#+BEGIN_SRC python :results output :exports both
+    class Solution(object):
+      def mergeAlternately(self, word1, word2):
+         result = ''
+         longest_word = word2
+         smallest_word = word1
+         if len(word1)>len(word2):
+             longest_word = word1
+             smallest_word = word2
+         for i in range(len(longest_word)):
+           if(i < len(word1)):
+             result += word1[i]
+           if(i < len(word2)):
+             result += word2[i]
+         return result
+
+
+    word1 = 'dedeabc'
+    word2 = 'pqr'
+    out = Solution()
+    res = out.mergeAlternately(word1,word2)
+    print(res)
+
+#+END_SRC
+
+#+RESULTS:
+: dpeqdreabc
+*** Problem Complexity
+   - Time Complexity: O(n)
+     - This will take O(n) time as the loop is to run till the length of the
+       longest string.
+
+   - Space Complexity: O(1)
+     - We donot use more than the constant space.
+
+** Approach 3 : Two Pointer
+- Approach:
