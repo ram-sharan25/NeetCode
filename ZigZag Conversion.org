@@ -1,0 +1,82 @@
+#+TITLE: ZigZag Conversion
+:PROPERTIES:
+:ID:       46B3C894-BBF1-4C1A-A8F2-8DF97CDCF738
+:Title:    ZigZag Conversion
+:Created:  <2025-07-13>
+:END:
+
+* Information
+  - Name: [ZigZag Conversion]
+  - Link: [https://leetcode.com/problems/zigzag-conversion/description/]
+  - Difficulty: [Medium]
+  - Date: <2025-07-13>
+  - Problem Type:
+* Description:
+- The string ~"PAYPALISHIRING"~ is written in a zigzag pattern on a
+  given number of rows.
+- The output is to be like in this image
+  #+DOWNLOADED: screenshot @ 2025-07-13 18:48:37
+  #+attr_html: :width 200px
+  #+attr_latex: :width 3cm
+  #+attr_org: :width 200px
+[[file:data/zigzag_output.png]]
+- and then the output should be read like ~"PAHNAPLSIIGYIR"~
+
+* Approach & Code
+
+** Approach 1
+- no of rows plays a major role .
+- Imagine each rows is a string so ~rows = ["","","",""]~ .
+- And we add string to each row while passing through all the string.
+  - We need to pass through each rows and add to each row string in the order.
+  - Order is from 1 -> 2 -> 3 -> 2 -> 1 -> 2 -> 3
+  - To maintain the order we can create incrementor and change its value on
+    hitting either of the ends( starts or end) of the rows iteration.
+  - And adding the incrementor to the rows on every iteration will give the
+    next value for the row.
+- And at last we concatenate the strings to get the output.
+
+#+BEGIN_SRC python :results output :exports both
+  class Solution(object):
+      def convert(self, s, numRows):
+          """
+          :type s: str
+          :type numRows: int
+          :rtype: str
+          """
+          if numRows == 1:
+              return s
+          rows = [""]*numRows
+          rowCount = 1
+          incrementer = 1
+          rowString = ''
+          for i in s:
+              rows[rowCount-1] += i
+              if rowCount == 1:
+                  incrementer=1
+              elif rowCount == numRows:
+                  incrementer = -1
+              rowCount+=incrementer
+          return ''.join(rows)
+
+  string = "PAYPALISHIRING"
+  num_rows = 3
+  out = Solution()
+  result = out.convert(string,num_rows)
+  print(result)
+#+END_SRC
+
+#+RESULTS:
+: PAHNAPLSIIGYIR
+
+*** Problem Complexity
+   - Time Complexity: O(n)
+     - As it only passes through the string only once
+   - Space Complexity: O(n)
+     - each character is stored in the rows array once during the execution.
+
+*** Key Takeaway / Learning
+- Each row here is a string in the array of string.
+  - This pretty much solves the problem of adding each character to each row.
+- Iterating through the rows in alterante ways with the help of alternating
+  incrementor.
