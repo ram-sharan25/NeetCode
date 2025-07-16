@@ -57,7 +57,7 @@
   - The genius idea is to maintain an array and store the value of intermediate
     products there.
   - The process of addition of each value at last in the manual method is
-    ingeniusly handled by adding the previous values of the array element to the
+    ingeniusly handled by adding the previous values of the array element to thoje
     new product obtained and transfer the carry forward.
   - The final result obtained will be in reversed order with zeros at last.
   - The zeros removed and joining the array in reverse order will give correct

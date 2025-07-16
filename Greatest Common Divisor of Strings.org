@@ -1,0 +1,73 @@
+#+TITLE: Greatest Common Divisor of Strings
+:PROPERTIES:
+:ID:       E94D420D-5237-42D3-BEF5-E266E3204308
+:Title:    Greatest Common Divisor of Strings
+:Created:  <2025-07-15>
+:END:
+
+* Information
+  - Name: [Greatest Common Divisor of Strings]
+  - Link: [https://leetcode.com/problems/greatest-common-divisor-of-strings/description/?envType=study-plan-v2&envId=leetcode-75]
+  - Difficulty: [Easy]
+  - Date: <2025-07-15>
+  - Problem Type:
+
+* Problem Decription
+- For two strings s and t we say t divides a if and only if ~s = t +
+  t + t + t .... + t + t~
+  - The string is concatenated more than one times
+- Given the two string str1 and str2 return the largest string that is
+  present in both the string.
+
+* Approach & Code
+
+** Approach 1
+- First we need to find if the combination of string even has GCD or
+  not.
+- For this we can use the fact that if both string has some string as
+  GCD then both the string should have same patterns repeated in them.
+- This gives that ~str1+str2 = str2+str1~ .
+- If the above condition exist then surely both string has some common
+  GCD.
+- And the the pattern of the string will be repeated in both so the
+  GCD of length and prefix of either string from ~str(0,GCD of length
+  of both)~ will give us the GCD Of both the strings.
+
+#+BEGIN_SRC python :results output :exports both
+  class Solution(object):
+      def gcd(self,a,b):
+          if(not b): return a
+          return self.gcd(b,a%b)
+      def gcdOfStrings(self, str1, str2):
+          """
+          :type str1: str
+          :type str2: str
+          :rtype: str
+          """
+          if (str1 + str2 != str2 + str1):
+              return ""
+          end  = self.gcd(len(str1),len(str2))
+          return str1[0:end]
+  str1 = "ABABAB"
+  str2 = "ABAB"
+  out = Solution()
+  result = out.gcdOfStrings(str1,str2)
+  print(result)
+#+END_SRC
+
+#+RESULTS:
+: AB
+
+*** Problem Complexity
+   - Time Complexity: O(n+m)
+     - String comparision uses O(n+m)
+     - The gcd step requires O(log(min(m,n)) [[https://mathworld.wolfram.com/EuclideanAlgorithm.html][link]]
+     - So the upper bound is O(n+m)
+   - Space Complexity: O(1)
+     - As no space is required else than to store the result.
+
+*** Key Takeaway / Learning
+- The method to disregard the false results is quite tricky one.
+- Using the prefix str1[0,gcd of both)
+  - This is using the fact that both string has same string if there
+    is gcd and end of gcd is gcd of length of both string.
