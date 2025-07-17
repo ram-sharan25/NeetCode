@@ -1,0 +1,161 @@
+#+TITLE: Longest Palindromic SUbstring
+:PROPERTIES:
+:ID:       E46DC17B-8BB1-47F7-BE28-358729AEED59
+:Title:    Longest Palindromic SUbstring
+:Created:  <2025-07-16>
+:END:
+
+* Information
+  - Name: [Longest Palindromic SUbstring]
+  - Link: [https://leetcode.com/problems/longest-palindromic-substring/description/]
+  - Difficulty: [Medium]
+  - Date: <2025-07-16>
+  - Problem Type:
+
+* Problem Decription
+- Given a string ~s~ return the longest palindromic substring in ~s~
+  #+DOWNLOADED: screenshot @ 2025-07-16 21:51:21
+  #+attr_html: :width 800px
+  #+attr_latex: :width 600cm
+  #+attr_org: :width 100px
+  [[file:data/longest_palindromic_substring.png]]
+
+-
+
+* Approach & Code
+
+** Approach 1 :
+- "I tried this approach and it didnot handled the even no of case
+   properly"
+- We can pass over the string by a single character starting from
+  second ~i=1~ and look front and back of it, if it matches then it is
+  a palindrome substring.
+  - i = n , then look for same characters in n-1 and n+1 place
+    - if it matches then it is a palindromic substring od length 3.
+      - Look further for n-2 and n+2 and continue till n=0 and n= len(s)
+    - if it doesnot then break from it.
+  - store the longest palindromic substring.
+- And if we do that for further back and front and if it still matches
+  than it is a longer palindromic substring.
+- If it breaks then we can shift to next string.
+
+#+BEGIN_SRC python :results output :exports both
+  class Solution(object):
+      def longestPalindrome(self, s):
+          """
+          :type s: str
+          :rtype: str
+          """
+          res = ""
+          if len(s)==1 : return s
+          if len(s)==2 :
+            if (s[0]==s[1]):
+                return s
+            else :
+                return s[1]
+          for i in range(1,len(s)):
+              f = i+1
+              b = i-1
+              val = s[i]
+              while (b>=0 and f<len(s)):
+                 # print("b->",b,s[b],"i->",i,s[i],"f->",f,s[f],"val->",val)
+                  if (s[f] == s[b]):
+                      val = s[b]+val+s[f]
+                      b -= 1
+                      f += 1
+                  elif (s[i] == s[b]):
+                      val = s[i] + s[b]
+                      b -= 1
+                  elif (s[i] == s[f]):
+                      val = s[i] + s[f]
+                      f += 1
+                  else:
+                      break
+              if(len(val)>len(res)):
+                 # print("val->",val)
+                  res = val
+          return res
+
+  s = "abadaaad"
+  out = Solution()
+  result  = out.longestPalindrome(s)
+  print("result->",result)
+#+END_SRC
+
+#+RESULTS:
+: result-> daaad
+
+*** Key Takeaway / Learning
+- This is not a complete solution:
+- This is only a partial solution for the odd numbered palindromic
+  string .
+** Approach 2 :
+- We can apply the approach as previously but it has to handle both
+  the even and odd cases for palindrome.
+- For odd :
+  - We start from the string itself and then compare the left and
+    right of the string.
+  - As we are getting the possible substring from every place in case
+    of odd string the longest string will be from the middle of the
+    largest substring .
+  - So while iterating through the whole string, when the value of ~i~
+    reaches at the middle of the largest pallindromic substring then
+    the value by odd method will be the largest.
+- For even:
+  - We start with the char and the next char and in case if they are
+    same then it we can get to the case of the odd case.
+  - as  in ~aaaa~ the ~a~ and ~a~ surrounds ~aa~ while the value of
+    ~i~ is 1.
+  - So it now becomes comparing the left and right of the ~aa~ to
+    check for palindromic string .
+  - As we are checking this for the every possible position of
+    characters in the string.
+    - We will get the longest even palindromic only when we are at
+      such position that  surrounds the two char as a palindromic string.
+#+BEGIN_SRC python :results output :exports both
+  class Solution(object):
+      def longestPalindrome(self, s):
+          """
+          :type s: str
+          :rtype: str
+          """
+          res = ""
+          resLen = 0
+
+          for i in range(len(s)):
+            # odd length palindromes
+            b,f = i,i
+            while(b>=0 and f < len(s)  and s[b]==s[f]):
+                if (resLen<f-b+1):
+                   res = s[b:f+1]
+                   resLen = len(res)
+                f += 1
+                b -= 1
+            #print("odd",res)
+            # even length palindromes
+            b, f = i, i+1
+            while(b>=0 and f < len(s)  and s[b]==s[f]):
+                if (resLen<f-b+1):
+                   res = s[b:f+1]
+                   resLen = len(res)
+                f += 1
+                b -= 1
+           # print("even",res)
+          return res
+
+  s = "babaaab"
+  out = Solution()
+  result = out.longestPalindrome(s)
+  print("result->", result)
+  # Expected Output: "aaaaaa" -> your test case `caaaaaac` should be "caaaaac"
+#+END_SRC
+
+#+RESULTS:
+: result-> baaab
+*** Problem Complexity
+   - Time Complexity: O(...)
+   - Space Complexity: O(...)
+
+*** Key Takeaway / Learning:
+- I used the addition approach to get the pallindrome string.
+  - Here the array method is used to get .
