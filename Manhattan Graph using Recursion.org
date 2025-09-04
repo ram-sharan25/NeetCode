@@ -1,0 +1,82 @@
+#+TITLE: Manhattan Graph using Recursion
+:PROPERTIES:
+:ID:       0878EBA7-6942-4506-8FC4-F343126B95D1
+:Title:    Manhattan Graph using Recursion
+:Created:  <2025-09-04>
+:END:
+
+* Information
+  - Name: [Manhattan Graph using Recursion]
+  - Link: [Algorithms Class]
+  - Difficulty: [Easy/Medium/Hard]
+  - Date: <2025-09-04>
+  - Problem Type: easy
+
+* Problem Decription
+- Problem Statement:
+- Count the no of  shortest path from (0,0) to (m,n).
+- Illustration:
+  [[file:data/manhattan graph.png]]
+
+- Thinking
+  - To travel the shortest path we need to travel only in right and top from any
+    point.
+  - Also to get to a point suppose (m,n) we can get there from (m-1,n) and
+    (m,n-1).
+  - This also means that we can add the no of paths  to  get to the
+    (m-1,n) and (m,n-1) to calculate the total paths from (0,0) to (m,n)
+  - And for the (m-1,n) and (m,n-1) it is the same case, we can go to their
+    respective left and down once at a time, and at last accumulate the result.
+  - So  we can use the recursion while solving this
+
+* Approach & Code
+** Approach 1: Using Recursion
+
+- Pseudocode
+
+#+BEGIN_EXAMPLE
+MH(m,n):
+  if(m<0 or n<0):
+    return 0
+  elif(m==0 and n==1):
+    return 1
+  elif(n==0 and m==1):
+   return 1
+  else:
+   return MH(m-1,n)+ MH(m,n-1)
+
+MH(5,5)
+#+END_EXAMPLE
+
+- Code
+#+BEGIN_SRC python :results output :exports both
+  print("Manhattan Graph Problem")
+  def MH(m,n):
+      if(m<0 or n<0):
+          return 0
+      elif(m==0 and n==1):
+          return 1
+      elif(n==0 and m==1):
+          return 1
+      else:
+          return MH(m-1,n)+ MH(m,n-1)
+  print("The output is : ",MH(5,5))
+
+
+#+END_SRC
+
+#+RESULTS:
+: Manhattan Graph Problem
+: The output is :  252
+
+*** Problem Complexity
+   - Time Complexity: O(...)
+   - Space Complexity: O(...)
+
+*** Key Takeaway / Learning
+- Thinking in recursion
+- I was checking for m==0 and n==0 and returning 0 for that which will be
+  redundant in this case.
+- Also there is not maintain a counter here as return statements in each step
+  will accumulate all the outputs and pass it to the previous(caller) instance
+  of the problem.
