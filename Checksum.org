@@ -1,0 +1,215 @@
+#+TITLE: Checksum
+:PROPERTIES:
+:ID:       9F521353-73FC-4F10-B3E8-E4D53A1A0813
+:Title:    Checksum
+:Created:  <2025-09-23>
+:END:
+
+* Information
+  - Name: [Checksum]
+  - Link: [http://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/]
+  - Difficulty: [Medium]
+  - Date: <2025-09-23>
+  - Problem Type:Array
+* Problem Decription
+For a sorted array A and a number s, find whether there are two entries in A which sum up to s.
+* Approach & Code
+- Array A is an sorted array.
+- Entries can be positive and nrgative integers.
+- Sum s to be sum of two entries from the array.
+- Same entry can be added twice to get the sum.
+** Approach 1: Exhaustive Approach
+
+#+BEGIN_EXAMPLE
+Checksum(A,s)
+  //A is an sorted array of numbers.
+  //s is the sum to be checked
+  n = A.length
+  for(i = 1 ; i <= n; i++)
+    for(j = i; j<= n; j++)
+      sum = A[i] + A[j]
+      if(sum == s)
+        return true
+  return false
+
+#+END_EXAMPLE
+
+
+#+BEGIN_SRC python :results output :exports both
+  def checksum(A, s):
+      """
+      Checks if two entries in a sorted array A sum up to s.
+
+      This is a literal translation of the provided pseudocode.
+      Note: The original pseudocode uses 1-based indexing (i from 1 to n).
+      Python uses 0-based indexing (0 to n-1), so the array access is A[i-1] and A[j-1].
+      """
+      # A is a sorted list of numbers.
+      # s is the sum to be checked
+      n = len(A)
+      for i in range(1, n + 1):
+        for j in range(i, n + 1):
+          # Adjust for Python's 0-based indexing
+          current_sum = A[i-1] + A[j-1]
+          if current_sum == s:
+            return True
+      return False
+  my_array = [1, 2, 4, 7, 8, 11]
+  target_sum_1 = 10 # (2 + 8)
+  target_sum_2 = 15 # (4 + 11)
+  print(checksum(my_array,target_sum_1))
+#+END_SRC
+
+#+RESULTS:
+: True
+
+*** Problem Complexity
+   - Time Complexity: O(n^2)
+     - As there is nested loop to compare the sum.
+   - Space Complexity: O(1)
+
+*** Key Takeaway / Learning
+** Approach 2: Iteratice Approach
+- A better approach then the exhaustive approach utilizing the fact that the
+  array is sorted.
+#+BEGIN_EXAMPLE
+Checksum(A,s)
+  //A is an sorted array of numbers.
+  //s is the sum to be checked
+  right = A.length
+  left = 1
+  while (left <= right):
+      sum = A[left] + A[right]
+      if(sum == s):
+        return true
+      elseif(sum < s):
+        left ++
+      else
+        right --
+  return false
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :exports both
+  def checksum(A, s):
+    # A is a sorted list of numbers.
+    # s is the sum to be checked
+    right = len(A)-1
+    left = 0
+    print(left,right, A[left],A[right])
+
+    while left <= right:
+      # This line will cause an IndexError because 'right' is out of bounds.
+      print( A[left] , A[right])
+      current_sum = A[left] + A[right]
+
+      if current_sum == s:
+        return True
+      elif current_sum < s:
+        left += 1
+      else:
+        # This logic is also from the pseudocode.
+        right -= 1
+
+    return False
+
+  # --- Example Usage ---
+  # Note: Running this code will raise an IndexError immediately.
+  my_array = [1, 2, 4, 7, 8, 11]
+  target_sum = 16
+
+  try:
+      print(checksum(my_array, target_sum))
+  except IndexError as e:
+      print(f"Code failed as expected with an error: {e}")
+#+END_SRC
+
+#+RESULTS:
+: 0 5 1 11
+: 1 11
+: 2 11
+: 4 11
+: 7 11
+: 7 8
+: 8 8
+: True
+*** Problem Complexity
+   - Time Complexity: O(n)
+     - As we only pass through a element once for the problem completion.
+   - Space Complexity: O(1)
+
+*** Key Takeaway / Learning
+- As the array is sorted, the arrangement of number will be such that the sum
+  will be most likely from the left and right of the center.
+- If the current sum is less then we must move towards the larger number that is
+  move the left index towards the center
+- Id the current sum is larger then we need smaller number which is the number
+  left to the current right index, so decrease the right index towards the mid.
+** Approach 3: Recursive Approach
+The iterative approach above gives an insight of the  key operation for each step.
+- We need the whole array,final sum, and two index to check the sum for it.
+- If we found the sum then the termination step is reached.
+- If not then we can use the current index to call for the next iteration with
+  new fresh index to look for.
+#+BEGIN_EXAMPLE
+Checksum(A,s,left,right)
+  //A is an sorted array of numbers.
+  //s is the sum to be checked
+  //left is the value of left index
+  //right is the value of right index
+  if(left > right):
+    return false
+  sum = A[left] + A[right]
+  if(sum == s):
+    return true
+  elseif(sum < s):
+    return Checksum(A,s,left++,right)
+  else
+    return Checksum(A,s,left,right--)
+Checksum(A,s,1,A.length)
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :exports both
+  def checksum(A,s,left,right):
+    #A is an sorted array of numbers.
+    #s is the sum to be checked
+    #left is the value of left index
+    #right is the value of right index
+    if(left > right):
+      return False
+    val = A[left] + A[right]
+    print(left,right,A[left] ,A[right],val)
+    if(val == s):
+      return True
+    elif(val < s):
+      return checksum(A,s,left+1,right)
+    else:
+      return checksum(A,s,left,right-1)
+  my_array = [1, 2, 4, 7, 8, 11]
+  target_sum = 16
+
+  try:
+      print(checksum(my_array, target_sum,0,len(my_array)-1))
+  except IndexError as e:
+      print(f"Code failed as expected with an error: {e}")
+
+#+END_SRC
+
+#+RESULTS:
+: 0 5 1 11 12
+: 1 5 2 11 13
+: 2 5 4 11 15
+: 3 5 7 11 18
+: 3 4 7 8 15
+: 4 4 8 8 16
+: True
+*** Problem Complexity
+   - Time Complexity: O(n)
+     #+DOWNLOADED: screenshot @ 2025-09-23 12:25:11
+     #+attr_html: :width 800px
+     #+attr_latex: :width 600cm
+     #+attr_org: :width 100px
+     [[file:data/time_complexity_checksum_recursive.png]]
+
+   - Space Complexity: O(1)
+
+*** Key Takeaway / Learning
