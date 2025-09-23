@@ -204,11 +204,12 @@ Checksum(A,s,1,A.length)
 : True
 *** Problem Complexity
    - Time Complexity: O(n)
-     #+DOWNLOADED: screenshot @ 2025-09-23 12:25:11
-     #+attr_html: :width 800px
-     #+attr_latex: :width 600cm
-     #+attr_org: :width 100px
-     [[file:data/time_complexity_checksum_recursive.png]]
+
+#+DOWNLOADED: screenshot @ 2025-09-23 12:33:32
+#+attr_html: :width 800px
+#+attr_latex: :width 600cm
+#+attr_org: :width 100px
+[[file:data/test.png]]
 
    - Space Complexity: O(1)
 
