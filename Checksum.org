@@ -209,8 +209,7 @@ Checksum(A,s,1,A.length)
 #+attr_html: :width 800px
 #+attr_latex: :width 600cm
 #+attr_org: :width 100px
-[[file:data/test.png]]
-
+[[file:data/time_complexity_two_sum_II_recursive.png]]
    - Space Complexity: O(1)
 
 *** Key Takeaway / Learning
