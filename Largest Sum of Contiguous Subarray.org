@@ -1,0 +1,64 @@
+#+TITLE: Largest Sum of Contiguous Subarray
+:PROPERTIES:
+:ID: 1743FACC-76E8-41CD-BE30-0EA960349491
+:Title:    Largest Sum of Contiguous Subarray
+:TAGS: algorithms, class, zhang
+:Created:  <2025-08-27>
+:END:
+
+* Information
+  - Name: [Largest Sum of Contiguous Subarray]
+  - Link: [Problem Link Here]
+  - Difficulty: [Easy/Medium/Hard]
+  - Date: <2025-08-27>
+  - Problem Type:
+
+* Problem Decription
+- If an array is  ~a = [9,-5,7,-8,2,9,-11,15,-4]~ then we need to find the largest
+  sum of array made from the contiguous numbers from the array above.
+- Array length can be from 0 to length(a).
+- Total number of subarray is  ~n+n-1+n-2+......+1 ->n(n+1)/2~.
+
+** Pseudocode:
+*** Exhaustive Approach:
+- Description
+  - Go through all the contiguous subarray
+    - Find sum of subarray
+    - Keep track of the largest sum
+  - return the final sum
+- Pseudocode:
+  - MCSA(A)
+    - // A is the input array of which we are to find the largest sum of the
+      contiguous subarray
+    - largestSum  = A[0] // -inf-> ideally it is the best
+    - n = A.length
+    - for (s_i=0; s_i<n-1;s_i++)
+      - for(e_i=s_i; e_i<n-1;e_i++)
+        - localSum = 0
+        - for(i=s_i;i<e_i-1;i++)
+          - localSum = localSum + A[i]
+        - if (localSum > largestSum):
+          - largestSum = localSum
+    - return largestSum
+
+
+* Approach & Code
+
+** Approach 1
+
+- (Briefly describe your main idea or approach here)
+
+#+BEGIN_SRC python :results output :exports both
+# Your Python code here
+# print("Solution output...")
+# result = your_function_call()
+# print(f"Result: {result}")
+#+END_SRC
+
+#+RESULTS:
+
+*** Problem Complexity
+   - Time Complexity: O(...)
+   - Space Complexity: O(...)
+
+*** Key Takeaway / Learning
