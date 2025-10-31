@@ -16,7 +16,13 @@
 - Problem Statement:
 - Count the no of  shortest path from (0,0) to (m,n).
 - Illustration:
-  [[file:data/manhattan graph.png]]
+
+
+                        #+DOWNLOADED: screenshot @ 2025-09-24 23:40:53
+                        #+attr_html: :width 800px
+                        #+attr_latex: :width 6cm
+                        #+attr_org: :width 100px
+                        [[file:data/manhattan_graph.png]]
 
 - Thinking
   - To travel the shortest path we need to travel only in right and top from any
@@ -51,23 +57,26 @@ MH(5,5)
 - Code
 #+BEGIN_SRC python :results output :exports both
   print("Manhattan Graph Problem")
-  def MH(m,n):
-      if(m<0 or n<0):
+  def MH(states,m,n):
+      if(states[m,n]):
+          return states[m,n]
+      elif(m<0 or n<0):
           return 0
       elif(m==0 and n==1):
           return 1
       elif(n==0 and m==1):
           return 1
       else:
-          return MH(m-1,n)+ MH(m,n-1)
-  print("The output is : ",MH(5,5))
+          val = MH(m-1,n)+ MH(m,n-1)
+          states[m,n] = val
+          return MH(states,m-1,n)+ MH(states,m,n-1)
+  print("The output is : ",MH(states,15,15))
 
 
 #+END_SRC
 
 #+RESULTS:
 : Manhattan Graph Problem
-: The output is :  252
 
 *** Problem Complexity
    - Time Complexity: O(...)
