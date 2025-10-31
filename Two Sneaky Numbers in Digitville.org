@@ -1,0 +1,82 @@
+#+TITLE: Two Sneaky Numbers in Digitville
+:PROPERTIES:
+:ID:       27C96E5A-7B67-425D-9616-ECC09C31EECC
+:Title:    Two Sneaky Numbers in Digitville
+:Created:  <2025-10-31>
+:END:
+
+* Information
+  - Name: [Two Sneaky Numbers in Digitville]
+  - Link: [https://leetcode.com/problems/the-two-sneaky-numbers-of-digitville/?envType=daily-question&envId=2025-10-31]
+  - Difficulty: [Medium]
+  - Date: <2025-10-31>
+  - Problem Type:
+
+* Problem Decription
+- In an array containing numbers from 0 to n-1 there are two numbers that are
+  repeating in the array.
+- Return an array containing those numbers.
+
+* Approach & Code
+
+** Approach 1: Exhaustive
+- Pass through the array, record the digits you passed and maintain an array of
+  it also.
+- For any number if you find that number in the seen array. Put that number in
+  the results array.
+- Return the results array.
+
+#+BEGIN_SRC python :results output :exports both
+  def get_sneaky_numbers(nums):
+      results = []
+      seen  = []
+      for i in range(0,len(nums)-2):
+          seen.append(-1)
+      for i in range(0,len(nums)):
+          num = a[i]
+          if (seen[num] != num ):
+              seen[num] = num
+          else:
+              results.append(a[i])
+      print(results)
+
+  a = [0,1,1,0]
+  get_sneaky_numbers(a)
+#+END_SRC
+
+#+RESULTS:
+: [-1, -1]
+: [1, 0]
+
+*** Problem Complexity
+   - Time Complexity: O(n)
+   - Space Complexity: O(n)
+
+** Approach 2 : Hashtable
+Here a hashtable with the count value can be kept to track the count of the
+value currently being looked in the loop.
+
+This will speed up as searching in the hastable ( dictionary ) is very fast as
+compared to working with an array.Though the previous and this approach are
+similar in that regard.
+*** code
+#+BEGIN_SRC python :results output :exports both
+  def get_sneaky_numbers(nums):
+      results = []
+      count  = {}
+      for i in nums:
+          count[i] = count.get(i,0) + 1
+          if(count[i]==2):
+              results.append(i)
+
+      print(results)
+
+  a = [0,1,1,0]
+  get_sneaky_numbers(a)
+#+END_SRC
+
+#+RESULTS:
+: [1, 0]
+*** Problem Complexity
+   - Time Complexity: O(n)
+   - Space Complexity: O(n)
