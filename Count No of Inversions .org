@@ -1,0 +1,125 @@
+#+TITLE: Count No of Inversions
+:PROPERTIES:
+:ID:       E5E9C542-65D9-43D6-B724-02C2D1C952D6
+:Title:    Count No of Inversions
+:Created:  <2025-09-25>
+:END:
+
+* Information
+  - Name: [Count No of Inversions ]
+  - Link: [Problem Link Here]
+  - Difficulty: [Easy/Medium/Hard]
+  - Date: <2025-09-25>
+  - Problem Type:
+
+* Problem Decription
+- (Briefly describe your problem here )
+
+-
+
+* Approach & Code
+
+** Exhaustive Approach
+#+BEGIN_EXAMPLE
+IV(A):
+  //A is the array
+  count = 0
+  for(i=1; i<=A.length-1; i++)
+    for(j=i+1; j<=A.length; j++)
+      if(A[i] > A[j])
+        count += 1
+  return count
+#+END_EXAMPLE
+** Merge Sort
+#+BEGIN_EXAMPLE
+IV(A,l,r):
+  //A is the original array from which the inversions are to be calculated
+  //l is the left index for the current step
+  //r is the right index for the current step
+    if(l>=r):
+      return 0
+    else:
+       m = l + (r-l)//2
+       val1 = IV(A,l,m)
+       val2 = IV(A,m+1,r)
+       count,result = InversionCount(A,l,m,r)
+       A[l:r+1] = result
+       total_inv = count+val1+val2
+       return total_inv
+
+InversionCount(A,l,m,r):
+  //A is the original array from which the inversions are to be calculated
+  //l is the left index for the current step
+  //r is the right index for the current step
+  count = 0
+  result = []
+  i = l
+  j = m+1
+  while(i<=m and j<=r):
+     if (A[i]>A[j]):
+      //if the element is greater in the left part then the remaining element on the left are all bound to //be greater then the current right element so all are inversions.
+        count+= (m-i+1)
+        result.append(A[j])
+        j+=1
+     else:
+        result.append(A[i])
+        i+=1
+  while ( i <= m ):
+     result.append(A[i])
+     i += 1
+  while ( j <= r ):
+     result.append(A[j])
+     j += 1
+  return count,result
+
+  IV(A,1,A.length)
+#+END_EXAMPLE
+
+#+BEGIN_SRC python :results output :exports both
+  def IV(A,l,r):
+      if(l>=r):
+        return 0
+      else:
+           m = l + (r-l)//2
+           val1 = IV(A,l,m)
+           val2 = IV(A,m+1,r)
+           count,result = InversionCount(A,l,m,r)
+           A[l:r+1] = result
+           total_inv = count+val1+val2
+           return total_inv
+
+  def InversionCount(A,l,m,r):
+      count = 0
+      result = []
+      i = l
+      j = m+1
+      while(i<=m and j<=r):
+          if (A[i]>A[j]):
+              count+= (m-i+1)
+              result.append(A[j])
+              j+=1
+          else:
+              result.append(A[i])
+              i+=1
+      while ( i <= m ):
+          result.append(A[i])
+          i += 1
+      while ( j <= r ):
+          result.append(A[j])
+          j += 1
+      return count,result
+  print(IV([6,3,4,2,5,1],0,5))
+#+END_SRC
+
+#+RESULTS:
+: 11
+
+
+
+#+LATEX: \newpage
+****
+*** Problem Complexity
+   - Time Complexity: O(...)
+   - Space Complexity: O(...)
+
+*** Key Takeaway / Learning
