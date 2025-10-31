@@ -1,0 +1,76 @@
+#+TITLE: Kth step of Hanoi
+:PROPERTIES:
+:ID:       B63BD3A7-4F28-4DEF-B4FA-30C60D834098
+:Title:    Kth step of Hanoi
+:Created:  <2025-09-25>
+:END:
+
+* Information
+  - Name: [Kth step of Hanoi]
+  - Link: [Problem Link Here]
+  - Difficulty: [Easy/Medium/Hard]
+  - Date: <2025-09-25>
+  - Problem Type:
+
+* Problem Decription
+- (Briefly describe your problem here )
+
+-
+
+* Approach & Code
+
+** Approach 1
+
+- (Briefly describe your main idea or approach here)
+
+#+BEGIN_EXAMPLE
+KSTEP(n,k,start,aux,dest):
+  //n is the total plates in the starting pegs
+  //k is the step to be determined
+  // start,aux,dest are the names of the three pegs
+  while(n>0):
+    middle_step = 2^(n-1) - 1
+
+    if (k == middle_step):
+      print(Plate n is moved from start to dest)
+    else if ( k < middle_step):
+      temp = aux
+      aux = dest
+      dest = temp
+    else:
+      k -= middle_step
+      temp = start
+      start = aux
+      aux = temp
+    n -= 1
+#+END_EXAMPLE
+#+BEGIN_SRC python :results output :exports both
+  def KSTEP(n,k,start,aux,dest):
+    #n is the total plates in the starting pegs
+    #k is the step to be determined
+    # start,aux,dest are the names of the three pegs
+    while(n>0):
+      middle_step = pow(2,n-1) - 1
+      if (k == middle_step):
+        print("Plate", n, "is moved from", start, "to",dest)
+      elif ( k < middle_step):
+        temp = aux
+        aux = dest
+        dest = temp
+      else:
+        k -= middle_step
+        temp = start
+        start = aux
+        aux = temp
+      n -= 1
+  KSTEP(3,1,"A","B","C")
+#+END_SRC
+
+#+RESULTS:
+: Plate 2 is moved from A to B
+
+*** Problem Complexity
+   - Time Complexity: O(...)
+   - Space Complexity: O(...)
+
+*** Key Takeaway / Learning
