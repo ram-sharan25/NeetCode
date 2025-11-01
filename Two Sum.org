@@ -1,0 +1,180 @@
+#+TITLE: Two Sum
+:PROPERTIES:
+:ID:       99DA2CA3-1BA9-46DE-8D80-4EEA70796B43
+:Title:    Two Sum
+:Created:  <2025-11-01>
+:END:
+
+* Information
+  - Name: [Two Sum]
+  - Link: [Problem Link Here]
+  - Difficulty: [Medium]
+  - Date: <2025-11-01>
+  - Problem Type: Array
+
+* Problem Decription
+- Given an array of integers ~nums~ and an ~target~ return the indices of the
+  two numbers such that they add upto the ~target~.
+- Assume that each input has exactly a single solution.
+- You cannot use the same element twice.
+
+* Approach & Code
+
+
+** Approach 1 : Exhaustive Approach (O(n^2))
+
+- For all the numbers in the array , loop through them, and add two numbers
+  using the nested loop and check for the target sum.
+
+#+BEGIN_SRC python :results output :exports both
+  class Solution(object):
+      def twoSum(self, nums, target):
+          """
+          :type nums: List[int]
+          :type target: int
+          :rtype: List[int]
+          """
+          n = len(nums)
+          for i in range(0,n-1):
+              for j in range(i+1,n):
+                  val = nums[i] + nums[j]
+                  if(val == target):
+                      return [i,j]
+
+  nums = [1,2,3,4,5]
+  target = 9
+  sol = Solution()
+  result = sol.twoSum(nums,target)
+  print(result)
+#+END_SRC
+
+#+RESULTS:
+: [3, 4]
+
+*** Problem Complexity
+   - Time Complexity: O(n^2)
+     - As there is nesting of for loop from 0 to n and at worst case the running
+       time of algorthm is in order of O(n^2)
+   - Space Complexity: O(1)
+
+** Approach 2 : Two pointer approach
+For this the numbers are to be sorted. If we sort the array then the original
+index of the numbers are to be  kept.
+
+Here hash table is used to record the original index of the array, but this wont
+work in case if there are dupplicate entries of same numbers in the array and
+those duplicate entries sums to the target.
+*** Pseudocode:
+#+BEGIN_EXAMPLE
+twoSum(nums,target):
+//nums is the array provided
+//target is the sum to be achieved
+  sorted_array = sort(nums)
+  i = 0
+  j = len(nums)
+  while(i<j):
+    val = a[i]+a[j]
+    if(target == val):
+      return [i,j]
+    elif ( val<target ):
+      i+=1
+    else
+      j+=1
+  return None
+
+#+END_EXAMPLE
+
+*** code
+:PROPERTIES:
+:ID:       066772CD-AC1D-40D6-8E49-83963BFD3BBB
+:END:
+This wont work in case if the numbers are duplicated
+#+BEGIN_SRC python :results output :exports both
+  def twoSum(nums,target):
+    #nums is the array provided
+    #target is the sum to be achieved
+    dict = {}
+    for i,n in enumerate(nums):
+      dict[n] = i
+    a = sorted(nums)
+    i = 0
+    j = len(a)-1
+    while(i<j):
+      val = a[i]+a[j]
+      if(target == val):
+        return [dict[a[i]],dict[a[j]]]
+      elif ( val<target ):
+        i+=1
+      else:
+        j+=1
+    return None
+  nums = [1,2,3,4]
+  nums_dup = [3,3]
+
+  target = 7
+  target_dup = 6
+  print("normal")
+  print(twoSum(nums,target))
+  print("With duplicate entries")
+  print(twoSum(nums_dup,target_dup))
+
+#+END_SRC
+
+#+RESULTS:
+: normal
+: [2, 3]
+: With duplicate entries
+: [1, 1]
+
+This can be solved if we can find a way to save up the original index and find
+those both in the final step.
+
+Here the index of the array is saved along with the value as a array itself.
+
+And sort method can also be used in the new array itself
+#+BEGIN_SRC python :results output :exports both
+  from typing import List
+  def twoSum( nums: List[int], target: int) -> List[int]:
+      a =  []
+      for i,n in enumerate(nums):
+        a.append([n,i])
+      a.sort()
+      i = 0
+      j = len(a)-1
+      while(i<j):
+        val = a[i][0]+a[j][0]
+        if(target == val):
+          return [a[i][1],a[j][1]]
+        elif ( val<target ):
+          i+=1
+        else:
+          j-=1
+      return None
+
+  nums = [2,7,11,15]
+  nums_dup = [3,3]
+
+  target = 9
+  target_dup = 6
+
+  print("normal")
+  print(twoSum(nums,target))
+  print("With duplicate entries")
+  print(twoSum(nums_dup,target_dup))
+#+END_SRC
+
+#+RESULTS:
+: normal
+: [0, 1]
+: With duplicate entries
+: [0, 1]
+*** Problem Complexity
+   - Time Complexity: O(nlogn)
+     - First we sort the data using ~sort~ or ~sorted~ of the python.
+       - This used Tim sort which is combination of  ~Merge Sort~  and
+         ~Insertition Sort~.
+       - So the complexity is ~O(nlgn)
+     - Then we use two pointer method to find the sum which is only O(n)
+     - So overall complexity is O(nlgn)
+   - Space Complexity: O(n)
+     - It is used while sorting.
